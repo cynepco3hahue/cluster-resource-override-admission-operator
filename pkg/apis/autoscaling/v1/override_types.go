@@ -137,6 +137,9 @@ type PodResourceOverrideSpec struct {
 
 	// MemoryRequestToLimitPercent (if > 0) overrides memory request to a percentage of memory limit
 	MemoryRequestToLimitPercent int64 `json:"memoryRequestToLimitPercent"`
+
+	// CPURequestPercent (if > 0) overrides CPU request to a percentage specified by the parameter
+	CPURequestPercent int64 `json:"cpuRequestPercent"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

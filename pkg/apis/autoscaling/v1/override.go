@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -34,6 +33,14 @@ func (in *PodResourceOverrideSpec) Validate() error {
 
 	if in.CPURequestToLimitPercent < 0 || in.CPURequestToLimitPercent > 100 {
 		return errors.New("invalid value for CPURequestToLimitPercent, must be [0...100]")
+	}
+
+	if in.CPURequestPercent < 0 || in.CPURequestPercent > 100 {
+		return errors.New("invalid value for CPURequestPercent, must be [0...100]")
+	}
+
+	if in.CPURequestPercent != 0 && in.CPURequestToLimitPercent != 0 {
+		return errors.New("you can not specify both CPURequestPercent and CPURequestToLimitPercent")
 	}
 
 	if in.LimitCPUToMemoryPercent < 0 {

@@ -29,7 +29,6 @@ func (m *mutatingWebhookConfiguration) New() *admissionregistrationv1beta1.Mutat
 	url := fmt.Sprintf("https://localhost:9400/apis/%s/%s/%s", m.values.AdmissionAPIGroup, m.values.AdmissionAPIVersion, m.values.AdmissionAPIResource)
 	policy := admissionregistrationv1beta1.Fail
 	matchPolicy := admissionregistrationv1beta1.Equivalent
-	namespaceMatchLabelKey := fmt.Sprintf("%s.%s/enabled", m.values.AdmissionAPIResource, m.values.AdmissionAPIGroup)
 	timeoutSeconds := int32(5)
 	sideEffects := admissionregistrationv1beta1.SideEffectClassNone
 	reinvoke := admissionregistrationv1beta1.IfNeededReinvocationPolicy
@@ -48,9 +47,6 @@ func (m *mutatingWebhookConfiguration) New() *admissionregistrationv1beta1.Mutat
 			{
 				Name: m.Name(),
 				NamespaceSelector: &metav1.LabelSelector{
-					MatchLabels: map[string]string{
-						namespaceMatchLabelKey: "true",
-					},
 					MatchExpressions: []metav1.LabelSelectorRequirement{
 						{
 							Key:      "openshift.io/run-level",
